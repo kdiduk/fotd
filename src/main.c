@@ -1,7 +1,9 @@
-#include <stdio.h>
+#include <arch/zx.h>
+#include "player.h"
 
 int main()
 {
-    printf("Hello, World!\n");
+    zx_cls(PAPER_BLACK);
+    player_draw();
     return 0;
 }

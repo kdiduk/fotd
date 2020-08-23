@@ -7,11 +7,8 @@ AR = appmake +zx
 # Origin of the game binary. Default value is 32768.
 ZORG=32768
 
-CFLAGS = -Wall -clib=sdcc_iy -zorg=${ZORG} \
+CFLAGS = -Wall -startup=1 -clib=sdcc_iy -zorg=${ZORG} \
 	-pragma-include:zpragma.inc -preserve
-
-LDFLAGS = -Wall -clib=sdcc_iy -zorg=${ZORG} \
-	-pragma-include:zpragma.inc
 
 ARFLAGS = --blockname $(PROJECT) --org $(ZORG)
 
@@ -25,10 +22,11 @@ BINDIR = bin
 INCLUDE = -Iinclude
 OBJECTS = $(addprefix $(OBJDIR)/, \
 	main.o \
+	player.o \
 	)
 
 $(PROJECT): prebuild $(OBJECTS)
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $(BINDIR)/$(PROJECT)
+	$(CC) $(OBJECTS) $(CFLAGS) -o $(BINDIR)/$(PROJECT)
 	$(APPMAKE)
 
 $(OBJECTS): $(OBJDIR)/%.o : %.c
