@@ -1,9 +1,9 @@
-#include <arch/zx.h>
+#include "game.h"
 #include "player.h"
 
 int main()
 {
-    zx_cls(PAPER_BLACK);
-    player_draw();
+    game_init();
+    game_run();
     return 0;
 }
