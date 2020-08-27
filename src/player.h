@@ -3,26 +3,18 @@
 
 #include <stdint.h>
 
-enum direction {
-    north,
-    south,
-    west,
-    east,
-    nortwest,
-    northeast,
-    southwest,
-    southeast
-};
 
 void player_init(void);
 
 void player_setpos(uint8_t x, uint8_t y);
 
+void player_moveby(uint8_t dx, uint8_t dy);
+
 uint8_t player_posx(void);
 
 uint8_t player_posy(void);
 
-void player_move(enum direction d);
+void player_move(uint8_t direction);
 
 void player_draw(void);
 

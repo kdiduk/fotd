@@ -22,6 +22,7 @@ BINDIR = bin
 INCLUDE = -Iinclude
 OBJECTS = $(addprefix $(OBJDIR)/, \
 	game.o \
+	level.o \
 	main.o \
 	player.o \
 	)
