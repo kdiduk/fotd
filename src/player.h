@@ -16,6 +16,4 @@ uint8_t player_posy(void);
 
 void player_move(uint8_t direction);
 
-void player_draw(void);
-
 #endif /* PLAYER_H */
