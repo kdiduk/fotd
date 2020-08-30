@@ -21,6 +21,7 @@ OBJDIR = obj
 BINDIR = bin
 INCLUDE = -Iinclude
 OBJECTS = $(addprefix $(OBJDIR)/, \
+	forest.o \
 	game.o \
 	level.o \
 	main.o \
