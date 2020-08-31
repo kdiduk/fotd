@@ -8,13 +8,13 @@
 
 static uint8_t inkey;
 
-void game_init()
+void game_init(void)
 {
     zx_cls(PAPER_BLACK);
     zx_border(PAPER_BLACK);
 }
 
-void game_run()
+void game_run(void)
 {
     level_init();
     while (1) {
