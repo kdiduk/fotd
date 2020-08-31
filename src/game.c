@@ -6,11 +6,12 @@
 #include "player.h"
 
 
-uint8_t inkey;
+static uint8_t inkey;
 
 void game_init()
 {
     zx_cls(PAPER_BLACK);
+    zx_border(PAPER_BLACK);
 }
 
 void game_run()
