@@ -7,14 +7,13 @@
 
 #define FRAMES (*((uint32_t*)0x5C78))
 
+static uint16_t elapsed = 0;
+
 
 void titlescreen_show(void)
 {
-    uint16_t elapsed = 0;
-
     zx_cls(PAPER_BLACK);
     zx_border(PAPER_BLACK);
-
 
     puts("\x10\x37\x11\x30");
     puts("\x16\x0A\x01" "+----------+");
