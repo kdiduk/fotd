@@ -26,6 +26,7 @@ static void draw_tile(uint8_t x, uint8_t y);
 
 void level_init(void)
 {
+    forest_init();
     set_ink_paper(INK_WHITE, INK_BLACK);
     for (uint8_t y = 0; y < FOREST_HEIGHT; ++y) {
 	for (uint8_t x = 0; x < FOREST_WIDTH; ++x) {

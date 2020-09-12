@@ -1,10 +1,13 @@
 #include <arch/zx.h>
 #include <input.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
 #include "game.h"
 #include "level.h"
 #include "player.h"
 
+#define FRAMES (*((uint32_t*)23672))
 
 static uint8_t inkey;
 
@@ -12,6 +15,7 @@ void game_init(void)
 {
     zx_cls(PAPER_BLACK);
     zx_border(PAPER_BLACK);
+    srand(FRAMES);
 }
 
 void game_run(void)
@@ -21,14 +25,9 @@ void game_run(void)
 	in_wait_key();
 	inkey = in_inkey();
 	switch (inkey) {
-	case 'y':
-	case 'u':
-	case 'h':
-	case 'j':
-	case 'k':
-	case 'l':
-	case 'b':
-	case 'n':
+	case 'y': case 'u':
+	case 'h': case 'j': case 'k': case 'l':
+	case 'b': case 'n':
 	    level_player_move(inkey);
 	    break;
 	}

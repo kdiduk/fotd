@@ -7,6 +7,7 @@
 #define FOREST_WIDTH (32)
 #define FOREST_HEIGHT (20)
 
+void forest_init(void);
 
 enum tile_type forest_tile(uint8_t x, uint8_t y);
 

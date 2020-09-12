@@ -1,9 +1,10 @@
 #include "forest.h"
+#include "generator.h"
 
 #define TILE_MASK_TYPE(tile) ((tile) & (0x07))
 
 
-static uint8_t map[FOREST_HEIGHT][FOREST_WIDTH] = {
+static uint8_t map[FOREST_HEIGHT][FOREST_WIDTH]; /* = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
@@ -24,7 +25,12 @@ static uint8_t map[FOREST_HEIGHT][FOREST_WIDTH] = {
     { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-};
+    };*/
+
+void forest_init(void)
+{
+    generate_forest(map);
+}
 
 enum tile_type forest_tile(uint8_t x, uint8_t y)
 {

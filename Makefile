@@ -19,10 +19,11 @@ APPMAKE = $(AR) $(ARFLAGS) -b $(BINDIR)/$(PROJECT)_CODE.bin \
 VPATH = src
 OBJDIR = obj
 BINDIR = bin
-INCLUDE = -Iinclude
+INCLUDE = -Isrc
 OBJECTS = $(addprefix $(OBJDIR)/, \
 	forest.o \
 	game.o \
+	generator.o \
 	level.o \
 	main.o \
 	player.o \
@@ -42,5 +43,6 @@ prebuild:
 .PHONY: clean
 clean:
 	$(RM) $(OBJECTS)
+	$(RM) -rf $(BINDIR)
 
 # EOF
