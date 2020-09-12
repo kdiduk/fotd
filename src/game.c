@@ -1,21 +1,16 @@
-#include <arch/zx.h>
 #include <input.h>
 #include <stdint.h>
-#include <stdlib.h>
-#include <time.h>
 #include "game.h"
 #include "level.h"
 #include "player.h"
+#include "titlescreen.h"
 
-#define FRAMES (*((uint32_t*)23672))
 
 static uint8_t inkey;
 
 void game_init(void)
 {
-    zx_cls(PAPER_BLACK);
-    zx_border(PAPER_BLACK);
-    srand(FRAMES);
+    titlescreen_show();
 }
 
 void game_run(void)
