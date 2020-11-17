@@ -1,19 +1,11 @@
 PROJECT=vagabond
 
 CC = zcc +zx
-LD = zcc +zx
-AR = appmake +zx
 
 # Origin of the game binary. Default value is 32768.
 ZORG=32768
 
 CFLAGS = -Wall -startup=1 -clib=sdcc_iy -zorg=$(ZORG) -preserve
-
-ARFLAGS = --blockname $(PROJECT) --org $(ZORG)
-
-# additional rule to make loadable tape-file
-APPMAKE = $(AR) $(ARFLAGS) -b $(BINDIR)/$(PROJECT)_CODE.bin \
-	-o $(BINDIR)/$(PROJECT).tap
 
 VPATH = src
 OBJDIR = obj
@@ -30,8 +22,7 @@ OBJECTS = $(addprefix $(OBJDIR)/, \
 	)
 
 $(PROJECT): prebuild $(OBJECTS)
-	$(CC) $(OBJECTS) $(CFLAGS) -o $(BINDIR)/$(PROJECT)
-	$(APPMAKE)
+	$(CC) $(OBJECTS) $(CFLAGS) -o $(BINDIR)/$(PROJECT) -create-app
 
 $(OBJECTS): $(OBJDIR)/%.o : %.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
