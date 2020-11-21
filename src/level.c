@@ -1,25 +1,19 @@
 #include <arch/zx.h>
 #include <stdbool.h>
-#include <stdio.h>
+#include "display.h"
 #include "forest.h"
 #include "level.h"
 #include "player.h"
 
 
-#define AT_CTRL ('\x16')
-#define INK_CTRL ('\x10')
-#define PAPER_CTRL ('\x11')
 #define LEVEL_ROWS (20)
 #define INVALID_MAX (10)
-#define CTRLBUF_LEN (6)
 
 static uint8_t invalid_x[INVALID_MAX];
 static uint8_t invalid_y[INVALID_MAX];
 static uint8_t invalid_count = 0;
-static char ctrlbuf[CTRLBUF_LEN];
 
 
-static void set_ink_paper(uint8_t ink, uint8_t paper);
 static bool can_move(int8_t tx, int8_t ty);
 static void draw_player(void);
 static void draw_tile(uint8_t x, uint8_t y);
@@ -27,7 +21,6 @@ static void draw_tile(uint8_t x, uint8_t y);
 void level_init(void)
 {
     forest_init();
-    set_ink_paper(INK_WHITE, INK_BLACK);
     for (uint8_t y = 0; y < FOREST_HEIGHT; ++y) {
 	for (uint8_t x = 0; x < FOREST_WIDTH; ++x) {
 	    draw_tile(x, y);
@@ -94,16 +87,6 @@ void level_player_move(uint8_t direction)
 }
 
 
-static void set_ink_paper(uint8_t ink, uint8_t paper)
-{
-    ctrlbuf[0] = INK_CTRL;
-    ctrlbuf[1] = 0x30 + ink;
-    ctrlbuf[2] = PAPER_CTRL;
-    ctrlbuf[3] = 0x30 + paper;
-    ctrlbuf[4] = '\0';
-    puts(ctrlbuf);
-}
-
 static bool can_move(int8_t tx, int8_t ty)
 {
     if (tx < 0 || tx > 31) {
@@ -126,39 +109,27 @@ static bool can_move(int8_t tx, int8_t ty)
 
 static void draw_player(void)
 {
-    set_ink_paper(INK_WHITE, INK_BLACK);
-    ctrlbuf[0] = AT_CTRL;
-    ctrlbuf[1] = player_posx() + 1;
-    ctrlbuf[2] = player_posy() + 2;
-    ctrlbuf[3] = '@';
-    ctrlbuf[4] = '\0';
-    puts(ctrlbuf);
+    display_ink(INK_WHITE);
+    display_char(player_posx(), player_posy(), '@');
 }
 
 static void draw_tile(uint8_t x, uint8_t y)
 {
-    char tile = '?';
     switch (forest_tile(x, y)) {
     case tile_tree:
-	set_ink_paper(INK_GREEN, INK_BLACK);
-	tile = '*';
+	display_ink(INK_GREEN);
+        display_char(x, y, '*');
 	break;
     case tile_ground:
-	set_ink_paper(INK_WHITE, INK_BLACK);
-	tile = '.';
+	display_ink(INK_WHITE);
+	display_char(x, y, '.');
 	break;
     default:
-	set_ink_paper(INK_WHITE, INK_BLACK);
+        display_ink(INK_RED);
+        display_char(x, y, '?');
 	break;
     }
 	
-    ctrlbuf[0] = AT_CTRL;
-    ctrlbuf[1] = x+1;
-    ctrlbuf[2] = y+2;
-    ctrlbuf[3] = tile;
-    ctrlbuf[4] = '\0';
-
-    puts(ctrlbuf);
 }
 
 /* EOF */

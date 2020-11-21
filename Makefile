@@ -12,6 +12,7 @@ OBJDIR = obj
 BINDIR = bin
 INCLUDE = -Isrc
 OBJECTS = $(addprefix $(OBJDIR)/, \
+	display.o \
 	forest.o \
 	game.o \
 	generator.o \
