@@ -15,7 +15,6 @@ OBJECTS = $(addprefix $(OBJDIR)/, \
 	display.o \
 	forest.o \
 	game.o \
-	generator.o \
 	level.o \
 	main.o \
 	player.o \

@@ -16,6 +16,7 @@ void game_init(void)
 void game_run(void)
 {
     level_init();
+    level_draw();
     while (1) {
 	in_wait_key();
 	inkey = in_inkey();
