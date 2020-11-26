@@ -22,61 +22,61 @@ static void generate_forest(void);
 
 void forest_init(void)
 {
-    width = 160; /* 5 screen levels */
-    height = 120; /* 6 screen levels */
-    generate_forest();
+        width = 160; /* 5 screen levels */
+        height = 120; /* 6 screen levels */
+        generate_forest();
 
-    do {
-        spawnx = rand() % width;
-        spawny = rand() % height;
-    } while (forest_tile(spawnx, spawny) != tile_ground);
+        do {
+                spawnx = rand() % width;
+                spawny = rand() % height;
+        } while (forest_tile(spawnx, spawny) != tile_ground);
 }
 
 uint8_t forest_width(void)
 {
-    return width;
+        return width;
 }
 
 uint8_t forest_height(void)
 {
-    return height;
+        return height;
 }
 
 enum tile_type forest_tile(uint8_t x, uint8_t y)
 {
-    return TILE_MASK_TYPE(map[y*width+x]);
+        return TILE_MASK_TYPE(map[y*width+x]);
 }
 
 uint8_t forest_spawnx(void)
 {
-    return spawnx;
+        return spawnx;
 }
 
 uint8_t forest_spawny(void)
 {
-    return spawny;
+        return spawny;
 }
 
 static void generate_forest(void)
 {
-    uint16_t yy = width * (height-1);
-    for (uint8_t x = 0; x < width; ++x) {
-        map[x] = tile_tree;
-        map[yy + x] = tile_tree;
-    }
+        uint16_t yy = width * (height-1);
+        for (uint8_t x = 0; x < width; ++x) {
+                map[x] = tile_tree;
+                map[yy + x] = tile_tree;
+        }
 
-    for (uint8_t y = 1; y < height-1; ++y) {
-        yy = y * width;
-        map[yy] = tile_tree;
-        map[yy+width-1] = tile_tree;
-	for (uint8_t x = 1; x < width-1; ++x) {
-            if (rand() < GROUND_PROBABILITY) {
-                 map[yy+x] = tile_ground;
-	    } else {
-		map[yy+x] = tile_tree;
-	    }
-	}
-    }
+        for (uint8_t y = 1; y < height-1; ++y) {
+                yy = y * width;
+                map[yy] = tile_tree;
+                map[yy+width-1] = tile_tree;
+                for (uint8_t x = 1; x < width-1; ++x) {
+                        if (rand() < GROUND_PROBABILITY) {
+                                map[yy+x] = tile_ground;
+                        } else {
+                                map[yy+x] = tile_tree;
+                        }
+                }
+        }
 }
 
 

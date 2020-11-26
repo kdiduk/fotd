@@ -26,168 +26,168 @@ static void draw_tile(uint8_t x, uint8_t y);
 
 void level_init(void)
 {
-    forest_init();
-    player_setpos(forest_spawnx(), forest_spawny());
-    center_screen();    
+        forest_init();
+        player_setpos(forest_spawnx(), forest_spawny());
+        center_screen();
 }
 
 void level_draw(void)
 {
-    if (screen_invalid) {
-         redraw_level();
-         screen_invalid = false;
-    }
-    else {
-        for (int i = 0; i < invalid_count; ++i) {
-	    draw_tile(invalid_x[i], invalid_y[i]);
+        if (screen_invalid) {
+                redraw_level();
+                screen_invalid = false;
         }
-        invalid_count = 0;
-    }
+        else {
+                for (int i = 0; i < invalid_count; ++i) {
+                        draw_tile(invalid_x[i], invalid_y[i]);
+                }
+                invalid_count = 0;
+        }
 
-    draw_player();
+        draw_player();
 }
 
 void level_player_move(uint8_t direction)
 {
-    int8_t dx = 0;
-    int8_t dy = 0;
-    switch (direction) {
-    case 'y':
-	dx--;
-	dy--;
-	break;
-    case 'u':
-	dx++;
-	dy--;
-	break;
-    case 'h':
-	dx--;
-	break;
-    case 'k':
-	dy--;
-	break;
-    case 'j':
-	dy++;
-	break;
-    case 'l':
-	dx++;
-	break;
-    case 'b':
-	dx--;
-	dy++;
-	break;
-    case 'n':
-	dx++;
-	dy++;
-	break;
-    }
-
-    if (can_move(dx, dy)) {
-	invalid_x[invalid_count] = player_posx();
-	invalid_y[invalid_count] = player_posy();
-	invalid_count++;
-
-	player_moveby(dx, dy);
-        if (player_posx() == xleft
-                || player_posx() == xleft + LEVEL_WIDTH-1
-                || player_posy() == ytop
-                || player_posy() == ytop + LEVEL_HEIGHT-1) {
-            center_screen();
-            invalid_count = 0;
+        int8_t dx = 0;
+        int8_t dy = 0;
+        switch (direction) {
+        case 'y':
+                dx--;
+                dy--;
+                break;
+        case 'u':
+                dx++;
+                dy--;
+                break;
+        case 'h':
+                dx--;
+                break;
+        case 'k':
+                dy--;
+                break;
+        case 'j':
+                dy++;
+                break;
+        case 'l':
+                dx++;
+                break;
+        case 'b':
+                dx--;
+                dy++;
+                break;
+        case 'n':
+                dx++;
+                dy++;
+                break;
         }
-    }
+
+        if (can_move(dx, dy)) {
+                invalid_x[invalid_count] = player_posx();
+                invalid_y[invalid_count] = player_posy();
+                invalid_count++;
+
+                player_moveby(dx, dy);
+                if (player_posx() == xleft
+                    || player_posx() == xleft + LEVEL_WIDTH-1
+                    || player_posy() == ytop
+                    || player_posy() == ytop + LEVEL_HEIGHT-1) {
+                        center_screen();
+                        invalid_count = 0;
+                }
+        }
 }
 
 static void center_screen(void)
 {
-    if (player_posx() < LEVEL_WIDTH/2) {
-         xleft = 0;
-    }
-    else if (player_posx() < forest_width() - LEVEL_WIDTH/2) {
-         xleft = player_posx() - LEVEL_WIDTH/2;
-    }
-    else {
-         xleft = forest_width() - LEVEL_WIDTH;
-    }
+        if (player_posx() < LEVEL_WIDTH/2) {
+                xleft = 0;
+        }
+        else if (player_posx() < forest_width() - LEVEL_WIDTH/2) {
+                xleft = player_posx() - LEVEL_WIDTH/2;
+        }
+        else {
+                xleft = forest_width() - LEVEL_WIDTH;
+        }
 
-    if (player_posy() < LEVEL_HEIGHT/2) {
-         ytop = 0;
-    }
-    else if (player_posy() < forest_height() - LEVEL_HEIGHT/2) {
-         ytop = player_posy() - LEVEL_HEIGHT/2;
-    }
-    else {
-         ytop = forest_height() - LEVEL_HEIGHT;
-    }
+        if (player_posy() < LEVEL_HEIGHT/2) {
+                ytop = 0;
+        }
+        else if (player_posy() < forest_height() - LEVEL_HEIGHT/2) {
+                ytop = player_posy() - LEVEL_HEIGHT/2;
+        }
+        else {
+                ytop = forest_height() - LEVEL_HEIGHT;
+        }
 
-    screen_invalid = true;
+        screen_invalid = true;
 }
 
 static void redraw_level(void)
 {
-    zx_cls(PAPER_BLACK);
+        zx_cls(PAPER_BLACK);
 
-    uint8_t y1 = ytop;
-    uint8_t y2 = y1 + LEVEL_HEIGHT;
-    uint8_t x1 = xleft;
-    uint8_t x2 = x1 + LEVEL_WIDTH;
-    
-    for (uint8_t y = y1; y < y2; ++y) {
-        for (uint8_t x = x1; x < x2; ++x) {
-	    draw_tile(x, y);
-	}
-    }
+        uint8_t y1 = ytop;
+        uint8_t y2 = y1 + LEVEL_HEIGHT;
+        uint8_t x1 = xleft;
+        uint8_t x2 = x1 + LEVEL_WIDTH;
+
+        for (uint8_t y = y1; y < y2; ++y) {
+                for (uint8_t x = x1; x < x2; ++x) {
+                        draw_tile(x, y);
+                }
+        }
 }
 
 static bool can_move(int8_t dx, int8_t dy)
-{    
-    if (dx < 0 && player_posx() == 0) {
-        return false;
-    }
-    if (dx > 0 && player_posx() == forest_width() - 1) {
-        return false;
-    }
+{
+        if (dx < 0 && player_posx() == 0) {
+                return false;
+        }
+        if (dx > 0 && player_posx() == forest_width() - 1) {
+                return false;
+        }
 
-    if (dy < 0 && player_posy() == 0) {
-        return false;
-    }
-    if (dy > 0 && player_posy() == forest_height() - 1) {
-        return false;
-    }
+        if (dy < 0 && player_posy() == 0) {
+                return false;
+        }
+        if (dy > 0 && player_posy() == forest_height() - 1) {
+                return false;
+        }
 
-    switch (forest_tile(player_posx() + dx, player_posy() + dy)) {
-    case tile_tree:
-	return false;
-    case tile_ground:
-	return true;
-    }
+        switch (forest_tile(player_posx() + dx, player_posy() + dy)) {
+        case tile_tree:
+                return false;
+        case tile_ground:
+                return true;
+        }
 
-    return false;
+        return false;
 }
 
 static void draw_player(void)
 {
-    display_ink(INK_WHITE);
-    display_char(player_posx()-xleft, player_posy()-ytop, '@');
+        display_ink(INK_WHITE);
+        display_char(player_posx()-xleft, player_posy()-ytop, '@');
 }
 
 static void draw_tile(uint8_t x, uint8_t y)
 {
-    switch (forest_tile(x, y)) {
-    case tile_tree:
-	display_ink(INK_GREEN);
-        display_char(x-xleft, y-ytop, '*');
-	break;
-    case tile_ground:
-	display_ink(INK_WHITE);
-	display_char(x-xleft, y-ytop, '.');
-	break;
-    default:
-        display_ink(INK_RED);
-        display_char(x-xleft, y-ytop, '?');
-	break;
-    }
-	
+        switch (forest_tile(x, y)) {
+        case tile_tree:
+                display_ink(INK_GREEN);
+                display_char(x-xleft, y-ytop, '*');
+                break;
+        case tile_ground:
+                display_ink(INK_WHITE);
+                display_char(x-xleft, y-ytop, '.');
+                break;
+        default:
+                display_ink(INK_RED);
+                display_char(x-xleft, y-ytop, '?');
+                break;
+        }
+
 }
 
 /* EOF */
