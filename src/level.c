@@ -168,7 +168,7 @@ static bool can_move(int8_t dx, int8_t dy)
 static void draw_player(void)
 {
         display_ink(INK_WHITE);
-        display_char(player_posx()-xleft, player_posy()-ytop, '@');
+        display_char(player_posx()-xleft, player_posy()-ytop+2, '@');
 }
 
 static void draw_tile(uint8_t x, uint8_t y)
@@ -176,15 +176,15 @@ static void draw_tile(uint8_t x, uint8_t y)
         switch (forest_tile(x, y)) {
         case tile_tree:
                 display_ink(INK_GREEN);
-                display_char(x-xleft, y-ytop, '*');
+                display_char(x-xleft, y-ytop+2, '*');
                 break;
         case tile_ground:
                 display_ink(INK_WHITE);
-                display_char(x-xleft, y-ytop, '.');
+                display_char(x-xleft, y-ytop+2, '.');
                 break;
         default:
                 display_ink(INK_RED);
-                display_char(x-xleft, y-ytop, '?');
+                display_char(x-xleft, y-ytop+2, '?');
                 break;
         }
 
