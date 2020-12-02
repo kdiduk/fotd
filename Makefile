@@ -1,4 +1,4 @@
-PROJECT=vagabond
+PROJECT=fotd
 
 CC = zcc +zx
 

@@ -18,11 +18,13 @@ void titlescreen_show(void)
         display_ink(INK_WHITE);
         display_paper(INK_BLACK);
 
-        display_string(9, 0, "+----------+");
-        display_string(9, 1, "| VAGABOND |");
-        display_string(9, 2, "+----------+");
+        display_string(4, 1, "+----------------------+");
+        display_string(4, 2, "|                      |");
+        display_string(4, 3, "| FOREST OF THE DAMNED |");
+        display_string(4, 4, "|                      |");
+        display_string(4, 5, "+----------------------+");
 
-        display_string(1, 9, "HIT ENTER TO BEGIN NEW JORNEY");
+        display_string(7, 10, "HIT ENTER TO BEGIN");
 
         display_string(9, 17, "Version 0.0.1");
         display_string(2, 19, "Copyright 2020, Kirill Diduk");
