@@ -1,0 +1,5 @@
+((c-mode . ((c-file-style . "k&r")
+            (tab-width . 8)
+	    (indent-tabs-mode . nil)
+            (c-basic-offset . 8)
+            (c-indent-level . 8))))
