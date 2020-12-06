@@ -26,7 +26,7 @@ void titlescreen_show(void)
 
         display_string(7, 10, "HIT ENTER TO BEGIN");
 
-        display_string(9, 17, "Version 0.0.1");
+        display_string(9, 17, "Version 0.0.2");
         display_string(2, 19, "Copyright 2020, Kirill Diduk");
         display_string(10, 20, "MIT License");
 
