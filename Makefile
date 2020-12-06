@@ -20,6 +20,7 @@ OBJECTS = $(addprefix $(OBJDIR)/, \
 	main.o \
 	player.o \
 	titlescreen.o \
+	viewport.o \
 	)
 
 $(PROJECT): prebuild $(OBJECTS)
@@ -34,7 +35,7 @@ prebuild:
 
 .PHONY: clean
 clean:
-	$(RM) $(OBJECTS)
+	$(RM) -rf $(OBJDIR)
 	$(RM) -rf $(BINDIR)
 
 # EOF

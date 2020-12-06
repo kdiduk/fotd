@@ -4,15 +4,11 @@
 #include "forest.h"
 #include "level.h"
 #include "player.h"
+#include "viewport.h"
 
 
 #define LEVEL_WIDTH (32)
 #define LEVEL_HEIGHT (20)
-#define INVALID_MAX (10)
-
-static uint8_t invalid_x[INVALID_MAX];
-static uint8_t invalid_y[INVALID_MAX];
-static uint8_t invalid_count = 0;
 
 static bool screen_invalid;
 static uint8_t xleft;
@@ -26,6 +22,7 @@ static void draw_tile(uint8_t x, uint8_t y);
 
 void level_init(void)
 {
+        viewport_init();
         forest_init();
         player_setpos(forest_spawnx(), forest_spawny());
         center_screen();
@@ -37,13 +34,8 @@ void level_draw(void)
                 redraw_level();
                 screen_invalid = false;
         }
-        else {
-                for (int i = 0; i < invalid_count; ++i) {
-                        draw_tile(invalid_x[i], invalid_y[i]);
-                }
-                invalid_count = 0;
-        }
 
+        viewport_render();
         draw_player();
 }
 
@@ -83,17 +75,13 @@ void level_player_move(uint8_t direction)
         }
 
         if (can_move(dx, dy)) {
-                invalid_x[invalid_count] = player_posx();
-                invalid_y[invalid_count] = player_posy();
-                invalid_count++;
-
+                viewport_invalidate(player_posx()-xleft, player_posy()-ytop);
                 player_moveby(dx, dy);
                 if (player_posx() == xleft
                     || player_posx() == xleft + LEVEL_WIDTH-1
                     || player_posy() == ytop
                     || player_posy() == ytop + LEVEL_HEIGHT-1) {
                         center_screen();
-                        invalid_count = 0;
                 }
         }
 }
@@ -175,12 +163,18 @@ static void draw_tile(uint8_t x, uint8_t y)
 {
         switch (forest_tile(x, y)) {
         case tile_tree:
-                display_ink(INK_GREEN);
-                display_char(x-xleft, y-ytop+2, '*');
+                /*
+                  display_ink(INK_GREEN);
+                  display_char(x-xleft, y-ytop+2, '*');
+                */
+                viewport_at(x-xleft, y-ytop, '*', INK_GREEN);
                 break;
         case tile_ground:
-                display_ink(INK_WHITE);
-                display_char(x-xleft, y-ytop+2, '.');
+                /*
+                  display_ink(INK_WHITE);
+                  display_char(x-xleft, y-ytop+2, '.');
+                */
+                viewport_at(x-xleft, y-ytop, '.', INK_WHITE);
                 break;
         default:
                 display_ink(INK_RED);
