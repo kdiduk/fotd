@@ -17,7 +17,6 @@ static uint8_t ytop;
 static void center_screen(void);
 static void redraw_level(void);
 static bool can_move(int8_t dx, int8_t dy);
-static void draw_player(void);
 static void draw_tile(uint8_t x, uint8_t y);
 
 void level_init(void)
@@ -36,7 +35,6 @@ void level_draw(void)
         }
 
         viewport_render();
-        draw_player();
 }
 
 void level_player_move(uint8_t direction)
@@ -75,8 +73,9 @@ void level_player_move(uint8_t direction)
         }
 
         if (can_move(dx, dy)) {
-                viewport_invalidate(player_posx()-xleft, player_posy()-ytop);
+                draw_tile(player_posx(), player_posy());
                 player_moveby(dx, dy);
+                viewport_at(player_posx()-xleft, player_posy()-ytop, '@', INK_WHITE);
                 if (player_posx() == xleft
                     || player_posx() == xleft + LEVEL_WIDTH-1
                     || player_posy() == ytop
@@ -125,6 +124,8 @@ static void redraw_level(void)
                         draw_tile(x, y);
                 }
         }
+
+        viewport_at(player_posx()-xleft, player_posy()-ytop, '@', INK_WHITE);
 }
 
 static bool can_move(int8_t dx, int8_t dy)
@@ -153,32 +154,17 @@ static bool can_move(int8_t dx, int8_t dy)
         return false;
 }
 
-static void draw_player(void)
-{
-        display_ink(INK_WHITE);
-        display_char(player_posx()-xleft, player_posy()-ytop+2, '@');
-}
-
 static void draw_tile(uint8_t x, uint8_t y)
 {
         switch (forest_tile(x, y)) {
         case tile_tree:
-                /*
-                  display_ink(INK_GREEN);
-                  display_char(x-xleft, y-ytop+2, '*');
-                */
                 viewport_at(x-xleft, y-ytop, '*', INK_GREEN);
                 break;
         case tile_ground:
-                /*
-                  display_ink(INK_WHITE);
-                  display_char(x-xleft, y-ytop+2, '.');
-                */
                 viewport_at(x-xleft, y-ytop, '.', INK_WHITE);
                 break;
         default:
-                display_ink(INK_RED);
-                display_char(x-xleft, y-ytop+2, '?');
+                viewport_at(x-xleft, y-ytop, '?', INK_RED);
                 break;
         }
 
